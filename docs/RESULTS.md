@@ -21,8 +21,14 @@ Raw export: [summary.csv](summary.csv)
 
 ## Screenshots
 
-| File | Shows |
-|------|-------|
-| `screenshots/test-plan-tree.png` | The test plan structure in the JMeter GUI |
-| `screenshots/summary-report.png` | The Summary Report after the run |
-| `screenshots/results-tree.png`   | View Results Tree with passing assertions |
+### Summary Report
+
+The full test plan tree is visible in the left panel.
+
+![Summary Report](screenshots/summary-report.png)
+
+### View Results Tree
+
+Every sample passed its status-code assertion (green icons).
+
+![View Results Tree](screenshots/results-tree.png)

@@ -44,11 +44,11 @@ Override load: -Jthreads=50 -Jrampup=20 -Jloops=5 -Jduration=120</stringProp>
       </HeaderManager>
       <hashTree/>
       <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="API Users">
-        <intProp name="ThreadGroup.num_threads">${__P(threads,10)}</intProp>
-        <intProp name="ThreadGroup.ramp_time">${__P(rampup,5)}</intProp>
+        <stringProp name="ThreadGroup.num_threads">${__P(threads,10)}</stringProp>
+        <stringProp name="ThreadGroup.ramp_time">${__P(rampup,5)}</stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">continue</stringProp>
-        <boolProp name="ThreadGroup.scheduler">${__P(scheduler,false)}</boolProp>
+        <boolProp name="ThreadGroup.scheduler">false</boolProp>
         <stringProp name="ThreadGroup.duration">${__P(duration,60)}</stringProp>
         <stringProp name="ThreadGroup.delay">0</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">

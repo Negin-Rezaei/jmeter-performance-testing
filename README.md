@@ -39,8 +39,7 @@ Test Plan
 | `threads`    | 10      | Concurrent virtual users                 |
 | `rampup`     | 5       | Ramp-up period (seconds)                 |
 | `loops`      | 1       | Iterations per user                      |
-| `scheduler`  | false   | Run for a fixed duration instead of loops|
-| `duration`   | 60      | Duration in seconds (when `scheduler=true`) |
+| `duration`   | 60      | Duration in seconds (only used if the Thread Group scheduler is enabled in the GUI) |
 | `sla_ms`     | 2000    | Max acceptable response time (ms)        |
 | `base_url`   | jsonplaceholder.typicode.com | Target host             |
 

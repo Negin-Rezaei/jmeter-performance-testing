@@ -1,0 +1,16 @@
+# JMeter run output
+results/
+*.jtl
+*.csv
+jmeter.log
+*.log
+
+# JMeter GUI / backup files
+*.jmx.bak
+*~
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

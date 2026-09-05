@@ -28,6 +28,7 @@ Test Plan
     ├── POST /posts
     │   └── Response Assertion – 201
     ├── Think Time (Uniform Random Timer)
+    ├── View Results Tree      (for debugging – disable for real load runs)
     └── Summary Report
 ```
 
@@ -39,8 +40,8 @@ Test Plan
 jmeter -t api-load-test.jmx
 ```
 
-Add a *View Results Tree* listener while debugging to inspect individual
-requests and responses.
+The *View Results Tree* listener lets you inspect individual requests and
+responses. Disable it before a real load run – it is memory-heavy.
 
 **Headless (the right way to run a load test):**
 
@@ -52,7 +53,26 @@ Then open `results/report/index.html` for the HTML dashboard.
 
 ## Sample results
 
-A sample run and its numbers are in [docs/RESULTS.md](docs/RESULTS.md).
+Configuration: 10 users · ramp-up 5 s · 3 loops → **60 requests**, **0% errors**.
+
+| Label        | Samples | Avg (ms) | Min | Max  | Error % | Throughput (/s) |
+|--------------|---------|----------|-----|------|---------|-----------------|
+| GET /posts/1 | 30      | 625      | 506 | 888  | 0.00%   | 1.94            |
+| POST /posts  | 30      | 994      | 610 | 8656 | 0.00%   | 1.94            |
+| **TOTAL**    | 60      | 809      | 506 | 8656 | 0.00%   | 3.49            |
+
+All status-code assertions passed. The `POST /posts` max (8.6 s) comes from a
+few slow outliers on the public mock API, not a steady-state issue.
+
+### Summary Report
+
+![Summary Report](docs/screenshots/summary-report.png)
+
+### View Results Tree
+
+![View Results Tree](docs/screenshots/results-tree.png)
+
+More detail and the raw CSV export: [docs/RESULTS.md](docs/RESULTS.md).
 
 ## Requirements
 
@@ -63,4 +83,7 @@ A sample run and its numbers are in [docs/RESULTS.md](docs/RESULTS.md).
 
 - JSONPlaceholder is a mock API – `POST /posts` returns `201` but does not
   actually store anything.
-- `results/` is git-ignored.
+- `results/` (raw `.jtl` / HTML dashboard) is git-ignored; only the curated
+  summary and screenshots under `docs/` are committed.
+- Numbers reflect a public API over the internet, not a controlled test
+  environment.

@@ -5,6 +5,10 @@ results/
 jmeter.log
 *.log
 
+# ...but keep the curated results committed under docs/
+!docs/
+!docs/**
+
 # JMeter GUI / backup files
 *.jmx.bak
 *~

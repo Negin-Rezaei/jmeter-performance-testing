@@ -50,6 +50,10 @@ jmeter -n -t api-load-test.jmx -l results/results.jtl -e -o results/report
 
 Then open `results/report/index.html` for the HTML dashboard.
 
+## Sample results
+
+A sample run and its numbers are in [docs/RESULTS.md](docs/RESULTS.md).
+
 ## Requirements
 
 - Apache JMeter 5.6.3+

@@ -85,7 +85,7 @@ Override load: -Jthreads=50 -Jrampup=20 -Jloops=5 -Jduration=120</stringProp>
             <boolProp name="ISREGEX">false</boolProp>
           </JSONPathAssertion>
           <hashTree/>
-          <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert response < 2s">
+          <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert response time within SLA">
             <stringProp name="DurationAssertion.duration">${__P(sla_ms,2000)}</stringProp>
           </DurationAssertion>
           <hashTree/>
@@ -119,7 +119,7 @@ Override load: -Jthreads=50 -Jrampup=20 -Jloops=5 -Jduration=120</stringProp>
             <intProp name="Assertion.test_type">8</intProp>
           </ResponseAssertion>
           <hashTree/>
-          <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert response < 2s">
+          <DurationAssertion guiclass="DurationAssertionGui" testclass="DurationAssertion" testname="Assert response time within SLA">
             <stringProp name="DurationAssertion.duration">${__P(sla_ms,2000)}</stringProp>
           </DurationAssertion>
           <hashTree/>

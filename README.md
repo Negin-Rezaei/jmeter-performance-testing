@@ -1,64 +1,54 @@
 # JSONPlaceholder API – Performance Test (Apache JMeter)
 
-A small load-test project built with **Apache JMeter 5.6.3** against the public
-[JSONPlaceholder](https://jsonplaceholder.typicode.com) REST API. It exercises two
-endpoints under concurrent load and validates both correctness and response time.
+A small **practice project** for getting familiar with Apache JMeter. It runs a
+simple load test against the public [JSONPlaceholder](https://jsonplaceholder.typicode.com)
+REST API and checks that each request returns the expected status code.
 
-## Scenario
+> Scope: this is a learning exercise, not a full performance-engineering suite.
 
-| Step | Request          | Assertions                                        |
-|------|------------------|--------------------------------------------------|
-| 1    | `GET /posts/1`   | HTTP 200 · JSON body `$.id == 1` · response < SLA |
-| 2    | `POST /posts`    | HTTP 201 · response < SLA                         |
+## What it does
 
-Each virtual user runs the two requests in sequence with a randomized think time
-(0.5–1.5 s) between iterations.
+| Step | Request        | Check                     |
+|------|----------------|---------------------------|
+| 1    | `GET /posts/1` | HTTP status is `200`      |
+| 2    | `POST /posts`  | HTTP status is `201`      |
+
+**Load:** 10 virtual users, ramped up over 5 seconds, each running the two
+requests 3 times, with a random think time (0.5–1.5 s) between iterations.
 
 ## Test plan structure
 
 ```
 Test Plan
-├── HTTP Request Defaults        (host, protocol, timeouts)
-├── HTTP Header Manager          (Content-Type / Accept: application/json)
-└── Thread Group "API Users"
+├── HTTP Request Defaults     (host + protocol)
+├── HTTP Header Manager       (Content-Type: application/json)
+└── Thread Group "API Users"  (10 users · ramp-up 5s · 3 loops)
     ├── GET /posts/1
-    │   ├── Response Assertion    – 200
-    │   ├── JSON Path Assertion   – $.id = 1
-    │   └── Duration Assertion    – < sla_ms
+    │   └── Response Assertion – 200
     ├── POST /posts
-    │   ├── Response Assertion    – 201
-    │   └── Duration Assertion    – < sla_ms
-    ├── Uniform Random Timer      – think time
+    │   └── Response Assertion – 201
+    ├── Think Time (Uniform Random Timer)
     └── Summary Report
 ```
 
-## Configurable load (JMeter properties)
+## How to run
 
-| Property     | Default | Meaning                                  |
-|--------------|---------|------------------------------------------|
-| `threads`    | 10      | Concurrent virtual users                 |
-| `rampup`     | 5       | Ramp-up period (seconds)                 |
-| `loops`      | 1       | Iterations per user                      |
-| `duration`   | 60      | Duration in seconds (only used if the Thread Group scheduler is enabled in the GUI) |
-| `sla_ms`     | 2000    | Max acceptable response time (ms)        |
-| `base_url`   | jsonplaceholder.typicode.com | Target host             |
+**GUI (for editing / debugging):**
 
-## How to run (headless / CI mode)
-
-```bash
-# basic run
-jmeter -n -t api-load-test.jmx -l results/results.jtl -e -o results/report
-
-# custom load
-jmeter -n -t api-load-test.jmx \
-  -Jthreads=50 -Jrampup=20 -Jloops=10 -Jsla_ms=1500 \
-  -l results/results.jtl -e -o results/report
+```
+jmeter -t api-load-test.jmx
 ```
 
-Open `results/report/index.html` for the HTML dashboard.
+Add a *View Results Tree* listener while debugging to inspect individual
+requests and responses.
 
-> GUI mode (`jmeter -t api-load-test.jmx`) is for editing/debugging only – always
-> run load tests in non-GUI mode.
+**Headless (the right way to run a load test):**
+
+```
+jmeter -n -t api-load-test.jmx -l results/results.jtl -e -o results/report
+```
+
+Then open `results/report/index.html` for the HTML dashboard.
 
 ## Requirements
 
@@ -67,8 +57,6 @@ Open `results/report/index.html` for the HTML dashboard.
 
 ## Notes
 
-- JSONPlaceholder is a mock API: `POST /posts` returns `201` but does not
-  actually persist data. The test is a demonstration of methodology, not a
-  benchmark of a real backend.
-- `results/` is git-ignored; commit a curated report separately if you want to
-  share numbers.
+- JSONPlaceholder is a mock API – `POST /posts` returns `201` but does not
+  actually store anything.
+- `results/` is git-ignored.

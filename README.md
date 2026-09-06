@@ -32,6 +32,21 @@ Test Plan
     └── Summary Report
 ```
 
+## Setup
+
+1. Install [Apache JMeter 5.6.3+](https://jmeter.apache.org/download_jmeter.cgi)
+   and a JDK (Java 8+, Java 17 recommended – `java -version` should work).
+2. Put JMeter's `bin` folder on your `PATH` so the `jmeter` command works, e.g.
+   on Windows PowerShell:
+
+   ```powershell
+   [Environment]::SetEnvironmentVariable(
+     "Path", $env:Path + ";C:\path\to\apache-jmeter-5.6.3\bin", "User")
+   ```
+
+   Then open a new terminal. Without this you must call JMeter by its full path
+   (`& "C:\path\to\apache-jmeter-5.6.3\bin\jmeter.bat" ...`).
+
 ## How to run
 
 **GUI (for editing / debugging):**
@@ -49,10 +64,15 @@ responses. Disable it before a real load run – it is memory-heavy.
 jmeter -n -t api-load-test.jmx -l results/results.jtl -e -o results/report
 ```
 
-This command creates a local `results/` folder (raw `.jtl` log + an HTML
-dashboard at `results/report/index.html`). That folder is git-ignored and is
-**not** part of this repo – the committed results live in
-[docs/](docs/RESULTS.md).
+- `-n` non-GUI · `-t` test plan · `-l` raw results log ·
+  `-e -o <dir>` generate the HTML dashboard into `<dir>`.
+- JMeter refuses to overwrite existing output, so delete the folder first when
+  re-running: `Remove-Item -Recurse -Force results` (PowerShell) or
+  `rm -rf results` (bash).
+- Open `results/report/index.html` in a browser for the dashboard.
+
+The `results/` folder is git-ignored and is **not** part of this repo – the
+committed results live in [docs/](docs/RESULTS.md).
 
 ## Sample results
 
@@ -76,11 +96,6 @@ few slow outliers on the public mock API, not a steady-state issue.
 ![View Results Tree](docs/screenshots/results-tree.png)
 
 More detail and the raw CSV export: [docs/RESULTS.md](docs/RESULTS.md).
-
-## Requirements
-
-- Apache JMeter 5.6.3+
-- Java 8+ (Java 17 recommended)
 
 ## Notes
 

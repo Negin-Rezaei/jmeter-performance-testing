@@ -1,4 +1,4 @@
-# JSONPlaceholder API – Performance Test (Apache JMeter)
+# JSONPlaceholder API — Performance Testing with Apache JMeter
 
 A small **practice project** for getting familiar with Apache JMeter. It runs a
 simple load test against the public [JSONPlaceholder](https://jsonplaceholder.typicode.com)

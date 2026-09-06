@@ -49,7 +49,10 @@ responses. Disable it before a real load run – it is memory-heavy.
 jmeter -n -t api-load-test.jmx -l results/results.jtl -e -o results/report
 ```
 
-Then open `results/report/index.html` for the HTML dashboard.
+This command creates a local `results/` folder (raw `.jtl` log + an HTML
+dashboard at `results/report/index.html`). That folder is git-ignored and is
+**not** part of this repo – the committed results live in
+[docs/](docs/RESULTS.md).
 
 ## Sample results
 
